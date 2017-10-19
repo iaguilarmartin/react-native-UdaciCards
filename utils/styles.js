@@ -1,5 +1,6 @@
 // import React from 'react';
 import { StyleSheet } from 'react-native';
+import colors from './colors';
 
 const styles = StyleSheet.create({
     inputText: {
@@ -9,17 +10,26 @@ const styles = StyleSheet.create({
         paddingHorizontal: 10
     },
     button: {
-        backgroundColor: '#335566',
-        paddingVertical: 10,
-        paddingHorizontal: 20
+        backgroundColor: colors.accent,
+        paddingVertical: 12,
+        paddingHorizontal: 22,
+        borderWidth: 1,
+        borderColor: colors.accent
     },
     disabledButton: {
-        backgroundColor: '#666'
+        backgroundColor: '#666',
+        borderColor: '#666'
+    },
+    invertedButton: {
+        backgroundColor: colors.light
     },
     buttonText: {
-        color: '#ddd',
+        color: colors.light,
         fontWeight: 'bold',
         fontSize: 16
+    },
+    invertedButtonText: {
+        color: colors.accent
     }
 });
 

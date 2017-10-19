@@ -23,6 +23,10 @@ class DeckList extends Component {
 
     loadDecks = () => getDecks().then(data => this.setState({decks: data}));
 
+    openDeck = deck => {
+        this.props.navigation.navigate('DeckDetail', {deckId: deck.key, title: deck.title});
+    };
+
     render() {
         const { decks } = this.state;
 
@@ -40,7 +44,7 @@ class DeckList extends Component {
         return (
             <FlatList style={{flex: 1}}
                       data={data}
-                      renderItem={({item}) => (<Deck onPressItem={pi => console.log(pi)} item={item}/>)}
+                      renderItem={({item}) => (<Deck onPressItem={this.openDeck} item={item}/>)}
             />
         )
     }

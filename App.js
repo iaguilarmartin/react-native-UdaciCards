@@ -4,16 +4,25 @@ import { View, StatusBar, TouchableOpacity } from 'react-native';
 import { Constants } from 'expo';
 import Icon from './components/Icon';
 
+import colors from './utils/colors';
 import DeckList from './components/DeckList';
 import NewDeck from './components/NewDeck';
+import DeckDetail from './components/DeckDetail';
 
 function AppStatusBar ({backgroundColor, ...props}) {
     return (
-        <View style={{ height: Constants.statusBarHeight }}>
+        <View style={{ backgroundColor, height: Constants.statusBarHeight }}>
             <StatusBar translucent backgroundColor={backgroundColor} {...props} />
         </View>
     )
 }
+
+const headerStyleNavigationOptions = {
+    headerTintColor: colors.light,
+    headerStyle: {
+        backgroundColor: colors.accent,
+    }
+};
 
 const MainNavigator = StackNavigator({
     Home: {
@@ -22,15 +31,23 @@ const MainNavigator = StackNavigator({
             title: 'UdaciCards',
             headerRight: (
                 <TouchableOpacity onPress={() => navigation.navigate('NewDeck')} style={{marginRight: 15}}>
-                    <Icon name="add" />
+                    <Icon name="add" color={colors.light} />
                 </TouchableOpacity>
-            )
+            ),
+            ...headerStyleNavigationOptions
         })
     },
     NewDeck: {
         screen: NewDeck,
         navigationOptions: {
-            title: 'New deck'
+            title: 'New deck',
+            ...headerStyleNavigationOptions
+        }
+    },
+    DeckDetail: {
+        screen: DeckDetail,
+        navigationOptions: {
+            ...headerStyleNavigationOptions
         }
     }
 });
@@ -39,7 +56,7 @@ export default class App extends React.Component {
     render() {
         return (
             <View style={{flex: 1}}>
-                <AppStatusBar barStyle="dark-content" />
+                <AppStatusBar barStyle="light-content" backgroundColor={colors.accent} />
                 <MainNavigator/>
             </View>
         );
