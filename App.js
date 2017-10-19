@@ -1,23 +1,47 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StackNavigator } from 'react-navigation';
+import { View, StatusBar, TouchableOpacity } from 'react-native';
+import { Constants } from 'expo';
+import Icon from './components/Icon';
 
-export default class App extends React.Component {
-  render() {
+import DeckList from './components/DeckList';
+import NewDeck from './components/NewDeck';
+
+function AppStatusBar ({backgroundColor, ...props}) {
     return (
-      <View style={styles.container}>
-        <Text>Open up App.js to start working on your app!</Text>
-        <Text>Changes you make will automatically reload.</Text>
-        <Text>Shake your phone to open the developer menu.</Text>
-      </View>
-    );
-  }
+        <View style={{ height: Constants.statusBarHeight }}>
+            <StatusBar translucent backgroundColor={backgroundColor} {...props} />
+        </View>
+    )
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
+const MainNavigator = StackNavigator({
+    Home: {
+        screen: DeckList,
+        navigationOptions: ({navigation}) => ({
+            title: 'UdaciCards',
+            headerRight: (
+                <TouchableOpacity onPress={() => navigation.navigate('NewDeck')} style={{marginRight: 15}}>
+                    <Icon name="add" />
+                </TouchableOpacity>
+            )
+        })
+    },
+    NewDeck: {
+        screen: NewDeck,
+        navigationOptions: {
+            title: 'New deck'
+        }
+    }
 });
+
+export default class App extends React.Component {
+    render() {
+        return (
+            <View style={{flex: 1}}>
+                <AppStatusBar barStyle="dark-content" />
+                <MainNavigator/>
+            </View>
+        );
+    }
+}
