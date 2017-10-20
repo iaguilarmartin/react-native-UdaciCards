@@ -39,7 +39,10 @@ export function saveDeckTitle(title) {
             questions: []
         };
 
-        return AsyncStorage.setItem(DECKS_DATA_KEY, JSON.stringify(storedData));
+        return AsyncStorage.setItem(DECKS_DATA_KEY, JSON.stringify(storedData))
+            .then(() => {
+                return { key: deckId, title };
+            })
     }).catch(err => {
         console.error('Error saving new deck into AsyncStorage', err);
         return null;

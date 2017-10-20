@@ -11,9 +11,19 @@ class NewDeck extends Component {
 
     createDeck = () => {
         saveDeckTitle(this.state.title)
-            .then(() => {
-                DeviceEventEmitter.emit('onDataChangedEvent',  {});
-                this.props.navigation.dispatch(NavigationActions.back());
+            .then(deck => {
+                //DeviceEventEmitter.emit('onDataChangedEvent',  {});
+                //this.props.navigation.dispatch(NavigationActions.back());
+
+                const resetAction = NavigationActions.reset({
+                    index: 1,
+                    actions: [
+                        NavigationActions.navigate({ routeName: 'Home' }),
+                        NavigationActions.navigate({ routeName: 'DeckDetail', params: {deckId: deck.key, title: deck.title}})
+                    ]
+                });
+
+                this.props.navigation.dispatch(resetAction);
             });
     };
 
