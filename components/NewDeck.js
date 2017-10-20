@@ -12,8 +12,8 @@ class NewDeck extends Component {
     createDeck = () => {
         saveDeckTitle(this.state.title)
             .then(() => {
-                DeviceEventEmitter.emit('refreshDeckList',  {});
-                this.props.navigation.dispatch(NavigationActions.back())
+                DeviceEventEmitter.emit('onDataChangedEvent',  {});
+                this.props.navigation.dispatch(NavigationActions.back());
             });
     };
 

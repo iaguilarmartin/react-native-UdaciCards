@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, DeviceEventEmitter } from 'react-native';
 import { getDeck } from '../utils/api';
 import defaultStyles from '../utils/styles';
 
@@ -15,12 +15,33 @@ class DeckDetail extends Component {
     };
 
     componentWillMount() {
+        DeviceEventEmitter.addListener('onDataChangedEvent', this.loadDeck);
+    }
+
+    componentDidMount() {
+        this.loadDeck();
+    }
+
+    componentWillUnmount() {
+        DeviceEventEmitter.removeListener('onDataChangedEvent', this.loadDeck);
+    }
+
+    loadDeck = () => {
         const { deckId } = this.props.navigation.state.params;
 
         getDeck(deckId).then(deck => this.setState({deck}));
-    }
+    };
 
+    addCard = () => {
+        const { navigation } = this.props;
+        const { deckId } = navigation.state.params;
 
+        navigation.navigate('AddCard', {deckId});
+    };
+
+    startQuiz = () => {
+        this.props.navigation.navigate('Quiz');
+    };
 
     render() {
         const { deck } = this.state;
@@ -36,12 +57,12 @@ class DeckDetail extends Component {
                     <Text style={styles.subtitle}>{this.state.deck.questions.length} cards</Text>
                 </View>
                 <View style={styles.buttonsContainer}>
-                    <TouchableOpacity style={[defaultStyles.button, defaultStyles.invertedButton, {marginBottom: 15}]}>
+                    <TouchableOpacity onPress={this.addCard} style={[defaultStyles.button, defaultStyles.invertedButton, {marginBottom: 15}]}>
                         <View style={styles.buttonView}>
                             <Text style={[defaultStyles.buttonText, defaultStyles.invertedButtonText]}>Add Card</Text>
                         </View>
                     </TouchableOpacity>
-                    <TouchableOpacity style={defaultStyles.button}>
+                    <TouchableOpacity onPress={this.startQuiz} style={defaultStyles.button}>
                         <View style={styles.buttonView}>
                             <Text style={defaultStyles.buttonText}>Start Quiz</Text>
                         </View>

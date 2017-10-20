@@ -10,7 +10,7 @@ class DeckList extends Component {
     };
 
     componentWillMount() {
-        DeviceEventEmitter.addListener('refreshDeckList', this.loadDecks);
+        DeviceEventEmitter.addListener('onDataChangedEvent', this.loadDecks);
     }
 
     componentDidMount() {
@@ -18,7 +18,7 @@ class DeckList extends Component {
     }
 
     componentWillUnmount() {
-        DeviceEventEmitter.removeListener('refreshDeckList');
+        DeviceEventEmitter.removeListener('onDataChangedEvent', this.loadDecks);
     }
 
     loadDecks = () => getDecks().then(data => this.setState({decks: data}));

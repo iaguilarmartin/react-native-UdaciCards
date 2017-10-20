@@ -8,6 +8,7 @@ import colors from './utils/colors';
 import DeckList from './components/DeckList';
 import NewDeck from './components/NewDeck';
 import DeckDetail from './components/DeckDetail';
+import AddCard from './components/AddCard';
 
 function AppStatusBar ({backgroundColor, ...props}) {
     return (
@@ -41,6 +42,13 @@ const MainNavigator = StackNavigator({
         screen: NewDeck,
         navigationOptions: {
             title: 'New deck',
+            ...headerStyleNavigationOptions
+        }
+    },
+    AddCard: {
+        screen: AddCard,
+        navigationOptions: {
+            title: 'Add Card',
             ...headerStyleNavigationOptions
         }
     },

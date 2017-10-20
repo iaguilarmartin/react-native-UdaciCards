@@ -47,6 +47,15 @@ export function saveDeckTitle(title) {
 }
 
 export function addCardToDeck(id, card) {
+    return AsyncStorage.getItem(DECKS_DATA_KEY).then(data => {
+        const storedData = JSON.parse(data);
 
+        storedData[id].questions.push(card);
+
+        return AsyncStorage.setItem(DECKS_DATA_KEY, JSON.stringify(storedData));
+    }).catch(err => {
+        console.error('Error adding card into AsyncStorage', err);
+        return null;
+    });
 }
 
