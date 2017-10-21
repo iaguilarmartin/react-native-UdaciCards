@@ -1,11 +1,12 @@
 // import React from 'react';
 import { StyleSheet } from 'react-native';
 import colors from './colors';
+import { Platform } from 'react-native'
 
 const styles = StyleSheet.create({
     inputText: {
         borderColor: '#000',
-        borderWidth: 1,
+        borderWidth: Platform.OS === 'ios' ? 1 : 0,
         paddingVertical: 5,
         paddingHorizontal: 10
     },
@@ -30,6 +31,11 @@ const styles = StyleSheet.create({
     },
     invertedButtonText: {
         color: colors.accent
+    },
+    textButton: {
+        color: colors.accent,
+        fontSize: 18,
+        fontWeight: 'bold'
     }
 });
 

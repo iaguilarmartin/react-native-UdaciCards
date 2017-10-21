@@ -40,7 +40,10 @@ class DeckDetail extends Component {
     };
 
     startQuiz = () => {
-        this.props.navigation.navigate('Quiz');
+        const { navigation } = this.props;
+        const { deckId } = navigation.state.params;
+
+        this.props.navigation.navigate('Quiz', {deckId});
     };
 
     render() {
@@ -62,7 +65,7 @@ class DeckDetail extends Component {
                             <Text style={[defaultStyles.buttonText, defaultStyles.invertedButtonText]}>Add Card</Text>
                         </View>
                     </TouchableOpacity>
-                    <TouchableOpacity onPress={this.startQuiz} style={defaultStyles.button}>
+                    <TouchableOpacity onPress={this.startQuiz} disabled={deck.questions.length === 0} style={[defaultStyles.button, (deck.questions.length === 0 && defaultStyles.disabledButton)]}>
                         <View style={styles.buttonView}>
                             <Text style={defaultStyles.buttonText}>Start Quiz</Text>
                         </View>

@@ -3,7 +3,7 @@ import Uuid from 'uuid-lib';
 
 import initialData from './initialData';
 
-const DECKS_DATA_KEY = 'CARDS_DATA';
+const DECKS_DATA_KEY = 'UdaciCards:decksData';
 
 export function getDecks() {
     return AsyncStorage.getItem(DECKS_DATA_KEY).then(data => {

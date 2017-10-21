@@ -1,6 +1,6 @@
 import React from 'react';
 import { StackNavigator } from 'react-navigation';
-import { View, StatusBar, TouchableOpacity } from 'react-native';
+import { View, StatusBar, TouchableOpacity, Platform } from 'react-native';
 import { Constants } from 'expo';
 import Icon from './components/Icon';
 
@@ -9,6 +9,7 @@ import DeckList from './components/DeckList';
 import NewDeck from './components/NewDeck';
 import DeckDetail from './components/DeckDetail';
 import AddCard from './components/AddCard';
+import Quiz from './components/Quiz';
 
 function AppStatusBar ({backgroundColor, ...props}) {
     return (
@@ -21,9 +22,14 @@ function AppStatusBar ({backgroundColor, ...props}) {
 const headerStyleNavigationOptions = {
     headerTintColor: colors.light,
     headerStyle: {
-        backgroundColor: colors.accent,
+        backgroundColor: colors.accent
     }
 };
+
+if (Platform.OS === 'ios') {
+    headerStyleNavigationOptions.headerStyle.height = 48;
+    headerStyleNavigationOptions.headerStyle.paddingBottom = 20;
+}
 
 const MainNavigator = StackNavigator({
     Home: {
@@ -57,14 +63,21 @@ const MainNavigator = StackNavigator({
         navigationOptions: {
             ...headerStyleNavigationOptions
         }
-    }
+    },
+    Quiz: {
+        screen: Quiz,
+        navigationOptions: {
+            title: 'Quiz',
+            ...headerStyleNavigationOptions
+        }
+    },
 });
 
 export default class App extends React.Component {
     render() {
         return (
             <View style={{flex: 1}}>
-                <AppStatusBar barStyle="light-content" backgroundColor={colors.accent} />
+                <AppStatusBar barStyle="light-content" backgroundColor={Platform.OS === 'ios' ? colors.accent : colors.darkAccent} />
                 <MainNavigator/>
             </View>
         );

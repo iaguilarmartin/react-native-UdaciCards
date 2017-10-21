@@ -33,7 +33,7 @@ class AddCard extends Component {
                 <Text style={styles.label}>Answer</Text>
                 <TextInput value={answer} onChangeText={text => this.setState({answer: text})} style={[defaultStyles.inputText, styles.button]} />
                 <TouchableOpacity onPress={this.createCard} disabled={question.length === 0 || answer.length === 0} style={[defaultStyles.button, ((question.length === 0 || answer.length === 0) && defaultStyles.disabledButton)]}>
-                    <Text style={defaultStyles.buttonText}>Create deck</Text>
+                    <Text style={defaultStyles.buttonText}>Create card</Text>
                 </TouchableOpacity>
             </View>
         );
