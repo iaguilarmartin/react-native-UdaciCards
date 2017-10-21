@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, DeviceEventEmitter } from 'react-native';
+import { View, Text, StyleSheet, DeviceEventEmitter } from 'react-native';
 import { getDeck } from '../utils/api';
-import defaultStyles from '../utils/styles';
+import Button from './Button';
 
 class DeckDetail extends Component {
     static navigationOptions = ({ navigation }) => {
@@ -60,16 +60,8 @@ class DeckDetail extends Component {
                     <Text style={styles.subtitle}>{this.state.deck.questions.length} cards</Text>
                 </View>
                 <View style={styles.buttonsContainer}>
-                    <TouchableOpacity onPress={this.addCard} style={[defaultStyles.button, defaultStyles.invertedButton, {marginBottom: 15}]}>
-                        <View style={styles.buttonView}>
-                            <Text style={[defaultStyles.buttonText, defaultStyles.invertedButtonText]}>Add Card</Text>
-                        </View>
-                    </TouchableOpacity>
-                    <TouchableOpacity onPress={this.startQuiz} disabled={deck.questions.length === 0} style={[defaultStyles.button, (deck.questions.length === 0 && defaultStyles.disabledButton)]}>
-                        <View style={styles.buttonView}>
-                            <Text style={defaultStyles.buttonText}>Start Quiz</Text>
-                        </View>
-                    </TouchableOpacity>
+                    <Button text="Add Card" onPress={this.addCard} style={{marginBottom: 15}} inverted/>
+                    <Button text="Start Quiz" disabled={deck.questions.length === 0} onPress={this.startQuiz}/>
                 </View>
             </View>
         )
@@ -87,11 +79,8 @@ const styles = StyleSheet.create({
         alignItems: 'center'
     },
     buttonsContainer: {
-        marginBottom: 25
-    },
-    buttonView: {
-        width: 150,
-        alignItems: 'center'
+        marginBottom: 25,
+        width: 200
     },
     title: {
         fontSize: 30,

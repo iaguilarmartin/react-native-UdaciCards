@@ -6,6 +6,7 @@ import defaultStyles from '../utils/styles';
 import colors from '../utils/colors';
 import Score from './Score';
 import { clearLocalNotification, setLocalNotification } from '../utils/notifications';
+import Button from './Button';
 
 class Quiz extends Component {
     state = {
@@ -93,29 +94,13 @@ class Quiz extends Component {
                 <View style={styles.buttonsContainer}>
                     {showScore ? (
                         <View>
-                            <TouchableOpacity onPress={this.goBack} style={[defaultStyles.button, defaultStyles.invertedButton, {marginBottom: 15}]}>
-                                <View style={styles.buttonView}>
-                                    <Text style={[defaultStyles.buttonText, defaultStyles.invertedButtonText]}>Back to Deck</Text>
-                                </View>
-                            </TouchableOpacity>
-                            <TouchableOpacity onPress={this.restartQuiz} style={defaultStyles.button}>
-                                <View style={styles.buttonView}>
-                                    <Text style={defaultStyles.buttonText}>Restart Quiz</Text>
-                                </View>
-                            </TouchableOpacity>
+                            <Button text="Back to Deck" onPress={this.goBack} style={{marginBottom: 15}} inverted/>
+                            <Button text="Restart Quiz" onPress={this.restartQuiz}/>
                         </View>
                     ) : (
                         <View>
-                            <TouchableOpacity onPress={() => this.saveResult(true)} style={[defaultStyles.button, {marginBottom: 15, borderWidth: 0, backgroundColor: colors.green}]}>
-                                <View style={styles.buttonView}>
-                                    <Text style={defaultStyles.buttonText}>Correct</Text>
-                                </View>
-                            </TouchableOpacity>
-                            <TouchableOpacity onPress={() => this.saveResult()} style={[defaultStyles.button, { borderWidth: 0, backgroundColor: colors.red}]}>
-                                <View style={styles.buttonView}>
-                                    <Text style={defaultStyles.buttonText}>Incorrect</Text>
-                                </View>
-                            </TouchableOpacity>
+                            <Button text="Correct" onPress={() => this.saveResult(true)} style={{marginBottom: 15, borderWidth: 0, backgroundColor: colors.green}}/>
+                            <Button text="Incorrect" onPress={() => this.saveResult()} style={{ borderWidth: 0, backgroundColor: colors.red}}/>
                         </View>
                     )}
                 </View>
@@ -135,11 +120,8 @@ const styles = StyleSheet.create({
         alignItems: 'center'
     },
     buttonsContainer: {
-        marginBottom: 25
-    },
-    buttonView: {
-        width: 150,
-        alignItems: 'center'
+        marginBottom: 25,
+        width: 200
     },
     title: {
         fontSize: 30,

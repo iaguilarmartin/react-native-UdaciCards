@@ -1,8 +1,9 @@
 import React, {Component} from 'react';
-import { TextInput, Text, TouchableOpacity, StyleSheet, View, KeyboardAvoidingView } from 'react-native';
+import { TextInput, Text, StyleSheet, View, KeyboardAvoidingView } from 'react-native';
 import { NavigationActions } from 'react-navigation'
 import defaultStyles from '../utils/styles';
 import { saveDeckTitle } from '../utils/api';
+import Button from './Button';
 
 class NewDeck extends Component {
     state = {
@@ -35,9 +36,7 @@ class NewDeck extends Component {
                 <View style={styles.container}>
                     <Text style={[styles.title, {marginBottom: 30}]}>What is the title of your new deck?</Text>
                     <TextInput value={title} onChangeText={text => this.setState({title: text})} autoFocus={true} style={[defaultStyles.inputText, {alignSelf: 'stretch', marginBottom: 30}]} />
-                    <TouchableOpacity onPress={this.createDeck} disabled={title.length <= 0} style={[defaultStyles.button, (title.length <= 0 && defaultStyles.disabledButton)]}>
-                        <Text style={defaultStyles.buttonText}>Create deck</Text>
-                    </TouchableOpacity>
+                    <Button text="Create deck" onPress={this.createDeck} disabled={title.length <= 0}/>
                 </View>
             </KeyboardAvoidingView>
         )

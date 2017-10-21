@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
-import { Text, View, TextInput, StyleSheet, TouchableOpacity, DeviceEventEmitter } from 'react-native';
+import { Text, View, TextInput, StyleSheet, DeviceEventEmitter } from 'react-native';
 import { NavigationActions } from 'react-navigation';
 import defaultStyles from '../utils/styles';
 import { addCardToDeck } from '../utils/api';
+import Button from './Button';
 
 class AddCard extends Component {
     state = {
@@ -29,12 +30,10 @@ class AddCard extends Component {
             <View style={styles.container}>
                 <Text style={styles.title}>Enter the information required for the new card</Text>
                 <Text style={styles.label}>Question</Text>
-                <TextInput value={question} onChangeText={text => this.setState({question: text})} autoFocus={true} style={[defaultStyles.inputText, styles.button]} />
+                <TextInput value={question} onChangeText={text => this.setState({question: text})} autoFocus={true} style={[defaultStyles.inputText, styles.stretched]} />
                 <Text style={styles.label}>Answer</Text>
-                <TextInput value={answer} onChangeText={text => this.setState({answer: text})} style={[defaultStyles.inputText, styles.button]} />
-                <TouchableOpacity onPress={this.createCard} disabled={question.length === 0 || answer.length === 0} style={[defaultStyles.button, ((question.length === 0 || answer.length === 0) && defaultStyles.disabledButton)]}>
-                    <Text style={defaultStyles.buttonText}>Create card</Text>
-                </TouchableOpacity>
+                <TextInput value={answer} onChangeText={text => this.setState({answer: text})} style={[defaultStyles.inputText, styles.stretched]} />
+                <Button text="Create card" disabled={question.length === 0 || answer.length === 0} onPress={this.createCard}/>
             </View>
         );
     }
@@ -57,7 +56,7 @@ const styles = StyleSheet.create({
         fontSize: 16,
         paddingLeft: 5
     },
-    button: {
+    stretched: {
         alignSelf: 'stretch',
         marginBottom: 30
     }
