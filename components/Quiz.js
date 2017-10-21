@@ -5,6 +5,7 @@ import { getDeck } from '../utils/api';
 import defaultStyles from '../utils/styles';
 import colors from '../utils/colors';
 import Score from './Score';
+import { clearLocalNotification, setLocalNotification } from '../utils/notifications';
 
 class Quiz extends Component {
     state = {
@@ -45,10 +46,17 @@ class Quiz extends Component {
     };
 
     saveResult(correct = false) {
-        this.setState(({score, currentQuestion}) => {
+        this.setState(({score, currentQuestion, deck}) => {
             const newScore = correct ? score + 1 : score;
+            const nextQuestion = currentQuestion + 1;
+
+            if (nextQuestion  === deck.questions.length) {
+                clearLocalNotification()
+                    .then(setLocalNotification);
+            }
+
             return {
-                currentQuestion: currentQuestion + 1,
+                currentQuestion: nextQuestion,
                 showAnswer: false,
                 score: newScore
             }
