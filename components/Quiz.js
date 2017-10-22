@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { NavigationActions } from 'react-navigation';
+import FlipCard from 'react-native-flip-card';
 import { getDeck } from '../utils/api';
 import defaultStyles from '../utils/styles';
 import colors from '../utils/colors';
@@ -12,7 +13,6 @@ class Quiz extends Component {
     state = {
         deck: null,
         currentQuestion: 0,
-        showAnswer: false,
         score: 0
     };
 
@@ -26,14 +26,6 @@ class Quiz extends Component {
         getDeck(deckId).then(deck => this.setState({deck}));
     };
 
-    changeTitle = () => {
-        this.setState(state => {
-            return {
-                showAnswer: !state.showAnswer
-            }
-        })
-    };
-
     goBack = () => {
         this.props.navigation.dispatch(NavigationActions.back());
     };
@@ -41,7 +33,6 @@ class Quiz extends Component {
     restartQuiz = () => {
         this.setState({
             currentQuestion: 0,
-            showAnswer: false,
             score: 0
         });
     };
@@ -58,14 +49,13 @@ class Quiz extends Component {
 
             return {
                 currentQuestion: nextQuestion,
-                showAnswer: false,
                 score: newScore
             }
         })
     };
 
     render() {
-        const { deck, currentQuestion, showAnswer, score } = this.state;
+        const { deck, currentQuestion, score } = this.state;
 
         if (!deck) {
             return (<Text>Deck not found</Text>);
@@ -82,12 +72,19 @@ class Quiz extends Component {
                     {showScore ? (
                         <Score percentage={ parseInt(score / questonsCount * 100) }/>
                     ) : (
-                        <View style={{alignItems: 'center'}}>
-                            <Text style={styles.subtitle}>{showAnswer ? 'Answer:' : 'Question:'}</Text>
-                            <Text style={styles.title}>{showAnswer ? question.answer : question.question}</Text>
-                            <TouchableOpacity onPress={this.changeTitle}>
-                                <Text style={defaultStyles.textButton}>{showAnswer ? 'Show question': 'Show answer'}</Text>
-                            </TouchableOpacity>
+                        <View style={{height: 0}}>
+                            <FlipCard style={{borderWidth: 0}}>
+                                <View style={{alignItems: 'center'}}>
+                                    <Text style={styles.subtitle}>Question</Text>
+                                    <Text style={styles.title}>{question.question}</Text>
+                                    <Text style={defaultStyles.textButton}>Show answer</Text>
+                                </View>
+                                <View style={{alignItems: 'center'}}>
+                                    <Text style={styles.subtitle}>Answer:</Text>
+                                    <Text style={styles.title}>{question.answer}</Text>
+                                    <Text style={defaultStyles.textButton}>Show question</Text>
+                                </View>
+                            </FlipCard>
                         </View>
                     )}
                 </View>
@@ -116,8 +113,8 @@ const styles = StyleSheet.create({
     },
     textsContainer: {
         flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center'
+        alignItems: 'center',
+        marginTop: 50
     },
     buttonsContainer: {
         marginBottom: 25,
